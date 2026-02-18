@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDENT DETAILS FORM</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./public/student.css">
+    <style>
+        .bold-text {
+            font-weight: bold;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+        .success-message {
+            color: green;
+            font-size: 0.9em;
+        }
+        .marks-input {
+            display: flex;
+            align-items: center;
+        }
+        .marks-addon {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <button onclick="goBackToDashboard()" class="btn btn-outline-primary student-back-btn">
+            ⬅ Back to Dashboard
+        </button>          
+        <h2 class="text-center bold-text">STUDENT DETAILS FORM </h2>
+        <div id="message-container"></div>
+        <form id="studentform" action="/students" method="POST" enctype="multipart/form-data">
+            <h4 class="bold-text">PERSONAL INFORMATION</h4>
+            <div class="row">
+                <div class="col-md-4 bold-text">
+                    <label for="applicationNo">Application No:</label>
+                    <input type="text" class="form-control" id="applicationNo" name="applicationNo">
+                    <span id="applicationno-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="name" >Name (Eg:ARJUN J) </label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Eg:ARJUN J">
+                    <span id="name-error" class="error-message"></span>
+                </div>
+               <!--
+<div class="col-md-4 bold-text">
+    <label for="registerNo">Register Number</label>
+    <input type="text" class="form-control" id="registerNo" name="registerNo">
+    <span id="registerno-error" class="error-message"></span>
+</div>
+-->
+                <div class="col-md-4 bold-text">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob" name="dob"> 
+                    <span id="dob-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="gender">Gender</label>
+                    <select class="form-control" id="gender" name="gender">
+                        <option value="">Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span id="gender-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="department" class="form-label">Department:</label>
+                    <select class="form-select" id="department" name="department">
+                        
+                            <option value="">Select</option>
+                            <option value="AGRICULTURAL ENGINEERING">AGRICULTURAL ENGINEERING</option>
+                            <option value="ARTIFICIAL INTELLIGENCE AND DATA SCIENCE">ARTIFICIAL INTELLIGENCE AND DATA SCIENCE</option>
+                            <option value="COMPUTER SCIENCE AND ENGINEERING">COMPUTER SCIENCE AND ENGINEERING</option>
+                            <option value="ELECTRONICS AND COMMUNICATION ENGINEERING">ELECTRONICS AND COMMUNICATION ENGINEERING</option>
+                            <option value="INFORMATION TECHNOLOGY">INFORMATION TECHNOLOGY</option>
+                            <option value="MECHANICAL ENGINEERING">MECHANICAL ENGINEERING</option>
+                            <option value="MECHATRONICS ENGINEERING">MECHATRONICS ENGINEERING</option>
+                    
+                        </select>
+                    <span id="department-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="regular" class="form-label">Regular/Lateral:</label>
+                    <select class="form-select" id="regular" name="regular">
+                        <option value="">Select</option>
+                        <option value="Regular">Regular</option>
+                        <option value="Lateral">Lateral</option>
+                    </select>
+                    <span id="regular-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="batch" class="form-label">Batch:</label>
+                    <select class="form-select" id="batch" name="batch">
+                        <option value="">Select</option>
+                        <option value="2020-2024">2020-2024</option>
+                        <option value="2021-2025">2021-2025</option>
+                        <option value="2022-2026">2022-2026</option>
+                        <option value="2023-2027">2023-2027</option>
+                        <option value="2024-2028">2024-2028</option>
+                        <option value="2025-2029">2025-2029</option>
+                        <option value="2026-2030">2026-2030</option>
+                        
+
+                        
+                    </select>
+                    <span id="batch-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="bloodGroup" class="form-label">Blood Group:</label>
+                    <select class="form-select" id="bloodGroup" name="bloodGroup">
+                        <option value="">Select</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>A1B+</option>
+                    </select>
+                    <span id="bloodgroup-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="mobileNo" class="form-label">Mobile No:</label>
+                    <input type="text" class="form-control" id="mobileNo" name="mobileNo">
+                    <span id="mobileno-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="aadharNo" class="form-label">Aadhaar No:</label>
+                    <input type="text" class="form-control" id="aadharNo" name="aadharNo">
+                    <span id="aadharno-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="email" class="form-label">Email ID:</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                    <span id="email-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="nationality" class="form-label">Nationality:</label>
+                    <select class="form-select" id="nationality" name="nationality">
+                        <option value="">Select</option>
+                        <option>Indian</option>
+                        <option>Other</option>
+                    </select>
+                    <span id="nationality-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="religion" class="form-label">Religion:</label>
+                    <select class="form-select" id="religion" name="religion">
+                        <option value="">Select</option>
+                        <option>Hindu</option>
+                        <option>Christian</option>
+                        <option>Muslim</option>
+                        <option>Other</option>
+                    </select>
+                    <span id="religion-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="community" class="form-label">Community:</label>
+                    <select class="form-select" id="community" name="community">
+                        <option value="">Select</option>
+                        <option>OC</option>
+                        <option>BC</option>
+                        <option>MBC</option>
+                        <option>DNS</option>
+                        <option>SC</option>
+                        <option>ST</option>
+                        <option>SCA</option>
+                        <option>Other</option>
+                    </select>
+                    <span id="community-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="motherTongue" class="form-label">Mother Tongue:</label>
+                    <select class="form-select" id="motherTongue" name="motherTongue" >
+                        <option value="">Select</option>
+                        <option>Tamil</option>
+                        <option>Telugu</option>
+                        <option>Malayalam</option>
+                        <option>Kannada</option>
+                        <option>Hindi</option>
+                        <option>English</option>
+                        <option>Other</option>
+                    </select>
+                    <span id="mothertongue-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="modeOfAdmission" class="form-label">Mode of Admission:</label>
+                    <select class="form-select" id="modeOfAdmission" name="modeOfAdmission">
+                        <option value="">Select</option>
+                        <option>Management Quota</option>
+                        <option>Government Quota</option>
+                    </select>
+                    <span id="modeofadmission-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="selectedGroup" class="form-label">Selected Group in 12th:</label>
+                    <select class="form-select" id="selectedGroup" name="selectedGroup">
+                        <option value="">Select</option>
+                        <option value="Science with Mathematics (PCM)">Phy+Che+Math+Bio (PCMB)</option>
+                        
+                        <option value="Computer Science">Phy+Che+Math+Cs(PCMC)</option>
+                        <option value="Vocational">Vocational</option>
+                    </select>
+                    <span id="selectedgroup-error" class="error-message"></span>
+                </div>
+                <!--
+                <div class="col-md-4 bold-text">
+                    <label for="year" class="form-label">Year:</label>
+                    <select class="form-select" id="year" name="year">
+                        <option value="">Select</option>
+                        <option>I</option>
+                        <option>II</option>
+                        <option>III</option>
+                        <option>IV</option>
+                    </select>
+                    <span id="year-error" class="error-message"></span>
+                </div>
+               -->
+                <div class="col-md-4 bold-text">
+                    <label for="hostel" class="form-label">Hosteller/Day Scholar:</label>
+                    <select class="form-select" id="hostel" name="hostel">
+                        <option value="">Select</option>
+                        <option>Hosteller</option>
+                        <option>Day Scholar</option>
+                    </select>
+                    <span id="hostel-error" class="error-message"></span>
+                </div>
+                
+                <div class="col-md-4 bold-text">
+                    <label for="first" class="form-label">First Graduate:</label>
+                    <select class="form-select" id="first" name="first">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                    <span id="first-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="emisNo">EMIS Number</label>
+                    <input type="text" class="form-control" id="emisNo" name="emisNo" >
+                    <span id="emisno-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="study" class="form-label">Study From 6th to 12th Government School:</label> 
+                    <select class="form-select" id="study" name="study">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                    <span id="study-error" class="error-message"></span>
+                </div>
+            </div>
+            <h4 class="mt-4 bold-text">Address</h4>
+            <div class="row">
+                <div class="col-md-4 bold-text">
+                    <label for="doorNo" class="form-label">Door No:</label>
+                    <input type="text" class="form-control" id="doorNo" name="doorNo">
+                    <span id="doorno-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="street" class="form-label">Street:</label>
+                    <input type="text" class="form-control" id="street" name="street">
+                    <span id="street-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="villageCity" class="form-label">Village/City:</label>
+                    <input type="text" class="form-control" id="villageCity" name="villageCity">
+                    <span id="villagecity-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="state" class="form-label">State:</label>
+                    <select class="form-control" id="state" name="state" onchange="updateDistricts()">
+                        <option value="">Select State</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                    </select>
+                    <span id="state-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="district" class="form-label">District:</label>
+                    <select class="form-control" id="district" name="district">
+                        <option value="">Select District</option>
+                    </select>
+                    <span id="district-error" class="error-message"></span>
+                </div>
+                <div class="col-md-4 bold-text">
+                    <label for="pinCode" class="form-label">PIN code:</label>
+                    <input type="number" class="form-control" id="pinCode" name="pinCode" >
+                    <span id="pincode-error" class="error-message"></span>
+                </div>
+            </div>
+            <h4 class="mt-4 bold-text">Parent Information</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3 bold-text">
+                            <label for="fatherName">Father's Name</label>
+                            <input type="text" class="form-control" id="fatherName" name="fatherName">
+                            <span id="fathername-error" class="error-message"></span>
+                        </div>
+                        <div class="col-md-3 bold-text">
+                            <label for="fatherMobile" class="form-label">Father's Mobile No:</label>
+                            <input type="text" class="form-control" id="fatherMobile" name="fatherMobile" >
+                            <span id="fathermobile-error" class="error-message"></span>
+                        </div>
+                        <div class="col-md-3 bold-text">              <label for="fatherOccupation" class="form-label">Father's Occupation:</label>
+                            <input type="text" class="form-control" id="fatherOccupation" name="fatherOccupation">
+                            <span id="fatheroccupation-error" class="error-message"></span>
+                        </div>
+                        <div class="col-md-3 bold-text">
+                            <label for="fatherAnnualIncome" class="form-label">Father's Annual Income:</label>
+                            <input type="number" class="form-control" id="fatherAnnualIncome" name="fatherAnnualIncome">
+                            <span id="fatherannualincome-error" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <div class="row">
+                        <div class="col-md-3 bold-text">
+                            <label for="motherName">Mother's Name</label>
+                            <input type="text" class="form-control" id="motherName" name="motherName">
+                            <span id="mothername-error" class="error-message"></span>
+                        </div>
+                        <div class="col-md-3 bold-text">
+                            <label for="motherMobile" class="form-label">Mother's Mobile No:</label>
+                            <input type="text" class="form-control" id="motherMobile" name="motherMobile">
+                            <span id="mothermobile-error" class="error-message"></span>
+                        </div>
+                        <div class="col-md-3 bold-text">
+                            <label for="motherOccupation" class="form-label">Mother's Occupation:</label>
+                            <input type="text" class="form-control" id="motherOccupation" name="motherOccupation">
+                            <span id="motheroccupation-error" class="error-message"></span>
+                        </div>
+                        <div class="col-md-3 bold-text">
+                            <label for="motherAnnualIncome" class="form-label">Mother's Annual Income:</label>
+                            <input type="number" class="form-control" id="motherAnnualIncome" name="motherAnnualIncome">
+                            <span id="motherannualincome-error" class="error-message"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 class="mt-4 fw-bold">School Study Information</h4>
+
+            <div class="table-responsive">
+                <table class="table  align-middle text-center">
+                    <colgroup>
+                        <col style="width: 8%">
+                        <col style="width: 28%">
+                        <col style="width: 18%">
+                        <col style="width: 18%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Name of Institution</th>
+                            <th>Block</th>
+                            <th>Studied District</th>
+                            <th>Marks</th>
+                            <th>Year of Passing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Class VI -->
+                        <tr>
+                            <td>VI</td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="school6" id="school6" aria-label="School VI"><span id="school6-error" class="text-danger small d-block" ></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="block6" id="block6" aria-label="Block VI"><span id="block6-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="studiedDistrict6" id="studiedDistrict6" aria-label="District VI"><span id="studiedDistrict6-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="marks6" id="marks6" value="Pass" readonly aria-label="Marks VI"><span id="marks6-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="year6" id="year6" aria-label="Year VI"><span id="year6-error" class="text-danger small d-block"></span></td>
+                        </tr>
+            
+                        <!-- Class VII -->
+                        <tr>
+                            <td>VII</td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="school7" id="school7" aria-label="School VII"><span id="school7-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="block7" id="block7" aria-label="Block VII"><span id="block7-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="studiedDistrict7" id="studiedDistrict7" aria-label="District VII"><span id="studiedDistrict7-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="marks7" id="marks7" value="Pass" readonly aria-label="Marks VII"><span id="marks7-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="year7" id="year7" aria-label="Year VII"><span id="year7-error" class="text-danger small d-block"></span></td>
+                        </tr>
+            
+                        <!-- Class VIII -->
+                        <tr>
+                            <td>VIII</td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="school8" id="school8" aria-label="School VIII"><span id="school8-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="block8" id="block8" aria-label="Block VIII"><span id="block8-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="studiedDistrict8" id="studiedDistrict8" aria-label="District VIII"><span id="studiedDistrict8-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="marks8" id="marks8" value="Pass" readonly aria-label="Marks VIII"><span id="marks8-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="year8" id="year8" aria-label="Year VIII"><span id="year8-error" class="text-danger small d-block"></span></td>
+                        </tr>
+            
+                        <!-- Class IX -->
+                        <tr>
+                            <td>IX</td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="school9" id="school9" aria-label="School IX"><span id="school9-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="block9" id="block9" aria-label="Block IX"><span id="block9-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="studiedDistrict9" id="studiedDistrict9" aria-label="District IX"><span id="studiedDistrict9-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="marks9" id="marks9" value="Pass" readonly aria-label="Marks IX"><span id="marks9-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="year9" id="year9" aria-label="Year IX"><span id="year9-error" class="text-danger small d-block"></span></td>
+                        </tr>
+            
+                        <!-- Class X -->
+                        <tr>
+                            <td>X</td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="school10" id="school10" aria-label="School X"><span id="school10-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="block10" id="block10" aria-label="Block X"><span id="block10-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="studiedDistrict10" id="studiedDistrict10" aria-label="District X"><span id="studiedDistrict10-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="marks10" id="marks10" aria-label="Marks X"><span id="marks10-error" class="text-danger small d-block" oninput="updateMarkFormat(this, 500)"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="year10" id="year10" aria-label="Year X"><span id="year10-error" class="text-danger small d-block"></span></td>
+                        </tr>
+            
+                        <!-- Class XI -->
+                        <tr>
+                            <td>XI</td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="school11" id="school11" aria-label="School XI"><span id="school11-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="block11" id="block11" aria-label="Block XI"><span id="block11-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="studiedDistrict11" id="studiedDistrict11" aria-label="District XI"><span id="studiedDistrict11-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="marks11" id="marks11" aria-label="Marks XI"><span id="marks11-error" class="text-danger small d-block" oninput="updateMarkFormat(this, 600)"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="year11" id="year11" aria-label="Year XI"><span id="year11-error" class="text-danger small d-block"></span></td>
+                        </tr>
+            
+                        <!-- Class XII -->
+                        <tr>
+                            <td>XII</td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="school12" id="school12" aria-label="School XII"><span id="school12-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="block12" id="block12" aria-label="Block XII"><span id="block12-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="studiedDistrict12" id="studiedDistrict12" aria-label="District XII"><span id="studiedDistrict12-error" class="text-danger small d-block"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="marks12" id="marks12" aria-label="Marks XII"><span id="marks12-error" class="text-danger small d-block" oninput="updateMarkFormat(this, 600)"></span></td>
+                            <td><input type="text" class="form-control form-control-sm text-center" name="year12" id="year12" aria-label="Year XII"><span id="year12-error" class="text-danger small d-block"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h4 class="mt-4 bold-text">12th Standard Marks</h4>
+                <table class="table" id="twelfthMarksTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center">S.No.</th>
+                            <th class="text-center">Name of the Subjects</th>
+                            <th class="text-center">Marks Obtained</th>
+                            <th class="text-center" name="yearOfPassing" id="yearOfPassing">Year of Passing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+                            
+                
+                <div class="form-row"> 
+                <div class="medium-instruction-container">
+                    <label>Medium of Instruction:</label>
+                    <div class="medium-options">
+                        <label for="tamilMedium">
+                            <input type="radio" id="tamilMedium" name="mediumOfInstruction" value="Tamil">
+                            Tamil
+                        </label>
+                        <label for="englishMedium">
+                            <input type="radio" id="englishMedium" name="mediumOfInstruction" value="English">
+                            English
+                        </label>
+                    </div>
+                </div>
+            
+                <div class="cutoff-container">
+                    <label for="cutoff">Cut Off:</label>
+                    <input type="text" class="form-control" id="cutoff" name="cutoff" readonly>
+                </div>
+            </div>
+
+            
+            <h4 class="mt-4 fw-bold">Fees Details</h4>
+            <table class="table" id="feesDetailsTable">
+                <thead>
+                    <tr>
+                        <th>Fee Type</th>
+                        <th>Allocated Fees (₹)</th>
+                        <th>Date</th>
+                        <th>UPI</th>
+                        <th>Paid Amount</th>
+                        <th>Pending</th>
+                        <th class="concession-header" type="text" style="display: none;">Reduced Fees (₹)</th>
+                        <th class="concession-header" style="display: none;">Reason (Admin)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Admission Fees</td>
+                        <td><input type="text" class="form-control allocated-fee" id="admissionFee" name="admissionFee" value="6000" readonly></td>
+                        <td><input type="date" class="form-control" id="admissionDate" name="admissionDate"></td>
+                        <td><input type="text" class="form-control" id="admissionUpi" name="admissionUpi"></td>
+                        <td><input type="text" class="form-control" id="admissionPaidStatus" name="admissionPaidStatus"></td>
+                        <td><input type="text" class="form-control" id="admissionPending" name="admissionPending"></td>
+                        <td class="concession-cell" style="display: none;"><input type="text" class="form-control form-control-sm concession-reduced-fee" id="admissionReducedFee" name="admissionReducedFee" oninput="updateAllocatedFee(this)"></td>
+                        <td class="concession-cell" style="display: none;"><input type="text" class="form-control form-control-sm concession-reason" id="admissionConcessionReason" name="admissionConcessionReason"></td>
+                    </tr>
+                    <tr>
+                        <td>Tuition Fees</td>
+                        <td><input type="text" class="form-control allocated-fee" id="tuitionFee" name="tuitionFee" readonly></td>
+                        <td><input type="date" class="form-control" id="tuitionDate" name="tuitionDate"></td>
+                        <td><input type="text" class="form-control" id="tuitionUpi" name="tuitionUpi"></td>
+                        <td><input type="text" class="form-control" id="tuitionPaidStatus" name="tuitionPaidStatus"></td>
+                        <td><input type="text" class="form-control" id="tuitionPending" name="tuitionPending"></td>
+                        <td class="concession-cell" style="display: none;"><input type="text" class="form-control form-control-sm concession-reduced-fee" id="tuitionReducedFee" name="tuitionReducedFee" oninput="updateAllocatedFee(this)"></td>
+                        <td class="concession-cell" style="display: none;"><input type="text" class="form-control form-control-sm concession-reason" id="tuitionConcessionReason" name="tuitionConcessionReason"></td>
+                    </tr>
+                    <tr id="hostel-row" style="display: none;">
+                        <td>Hostel Fees</td>
+                        <td><input type="text" class="form-control allocated-fee" id="hostelFee" name="hostelFee" readonly></td>
+                        <td><input type="date" class="form-control" id="hostelDate" name="hostelDate"></td>
+                        <td><input type="text" class="form-control" id="hostelUpi" name="hostelUpi"></td>
+                        <td><input type="text" class="form-control" id="hostelPaidStatus" name="hostelPaidStatus"></td>
+                        <td><input type="text" class="form-control" id="hostelPending" name="hostelPending"></td>
+                        <td class="concession-cell" style="display: none;"><input type="text" class="form-control form-control-sm concession-reduced-fee" id="hostelReducedFee" name="hostelReducedFee" oninput="updateAllocatedFee(this)"></td>
+                        <td class="concession-cell" style="display: none;"><input type="text" class="form-control form-control-sm concession-reason" id="hostelConcessionReason" name="hostelConcessionReason"></td>
+                    </tr>
+                    <tr>
+                        <td>Total Fees</td>
+                        <td><input type="text" class="form-control" id="totalFee" name="totalFee" readonly></td>
+                        <td><input type="date" class="form-control" id="totalDate" name="totalDate"></td>
+                        <td><input type="text" class="form-control" id="totalUpi" name="totalUpi"></td>
+                        <td><input type="text" class="form-control" id="totalPaidStatus" name="totalPaidStatus"></td>
+                        <td><input type="text" class="form-control" id="totalPending" name="totalPending"></td>
+                        <td class="concession-cell" style="display: none;"></td>
+                        <td class="concession-cell" style="display: none;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-info mt-2" id="concessionButton">Apply Concession</button>
+            <input type="hidden" id="concessionInfoInput" name="concessionInfo">
+<h4 class="mt-4 fw-bold">Required Document</h4>
+<div class="document-checklist">
+    
+    <table>
+        <tr id="documentChecklist">
+            <th>Document</th>
+            <th>Original</th>
+            <th>Softcopy</th>
+        </tr>
+        <tr id="aadharCard">
+            <td >Aadhar Card</td>
+            <td><input type="checkbox" id="aadharCardOriginal" name="aadharCardOriginal"></td>
+            <td><input type="checkbox" id="aadharCardSoftcopy"name="aadharCardSoftcopy"></td>
+        </tr>
+        <tr id="communityCertificate">
+            <td >Community Certificate</td>
+            <td><input type="checkbox" id ="communityCertificateOriginal"name="communityCertificateOriginal"></td>
+            <td><input type="checkbox" id ="communityCertificateSoftcopy" name="communityCertificateSoftcopy"></td>
+        </tr>
+        <tr id="tenthMarkSheet">
+            <td >10th Mark Sheet</td>
+            <td><input type="checkbox" id = "tenthMarkSheetOriginal"name="tenthMarkSheetOriginal"></td>
+            <td><input type="checkbox" id="tenthMarkSheetSoftcopy" name="tenthMarkSheetSoftcopy"></td>
+        </tr>
+        <tr id="eleventhMarkSheet">
+            <td >11th Mark Sheet</td>
+            <td><input type="checkbox" id="eleventhMarkSheetOriginal"name="eleventhMarkSheetOriginal"></td>
+            <td><input type="checkbox" id="eleventhMarkSheetSoftcopy" name="eleventhMarkSheetSoftcopy"></td>
+        </tr>
+        <tr id="twelfthMarkSheet">
+            <td >12th Mark Sheet</td>
+            <td><input type="checkbox" id="twelfthMarkSheetOriginal" name="twelfthMarkSheetOriginal"></td>
+            <td><input type="checkbox" id="twelfthMarkSheetSoftcopy name="twelfthMarkSheetSoftcopy"></td>
+        </tr>
+        <tr id="transferCertificate">
+            <td >Transfer Certificate</td>
+            <td><input type="checkbox" id="transferCertificateOriginal"name="transferCertificateOriginal"></td>
+            <td><input type="checkbox" id="transferCertificateSoftcopy"name="transferCertificateSoftcopy"></td>
+        </tr>
+        <tr id="birthCertificate" >
+            <td>Birth Certificate</td>
+            <td><input type="checkbox" id="birthCertificateOriginal" name="birthCertificateOriginal"></td>
+            <td><input type="checkbox" id="birthCertificateSoftcopy"name="birthCertificateSoftcopy"></td>
+        </tr>
+        <tr id="firstCertificate">
+            <td >First Graduate Certificate</td>
+            <td><input type="checkbox" id="firstCertificateOriginal" name="firstCertificateOriginal"></td>
+            <td><input type="checkbox" id="firstCertificateSoftcopy"name="firstCertificateSoftcopy"></td>
+        </tr>
+        <tr id="photo" >
+            <td >Photo</td>
+            <td><input type="checkbox" id="photoOriginal" name="photoOriginal"></td>
+            <td><input type="checkbox" id="photoSoftcopy" name="photoSoftcopy"></td>
+        </tr>
+        <tr id="studentSignature">
+            <td >Student Signature</td>
+            <td><input type="checkbox" id="studentSignatureOriginal" name="studentSignatureOriginal"></td>
+            <td><input type="checkbox" id="studentSignatureSoftcopy"name="studentSignatureSoftcopy"></td>
+        </tr>
+    </table>    
+</div>
+<div class="form-row mt-3 admission-form" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; width: 100%;">
+    <!-- Left Side: Admission Status -->
+    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+      <label for="admissionStatus" style="font-size: 1.1em; margin-right: 4px;">Admission Status:</label>
+  
+      <label style="display: flex; align-items: center; margin-right: 8px;">
+        <input type="radio" id="admitted" name="admissionStatus[status]" value="Admitted" style="margin-right: 4px;">
+        <span>Admitted</span>
+      </label>
+  
+      <label style="display: flex; align-items: center; margin-right: 8px;">
+        <input type="radio" id="pending" name="admissionStatus[status]" value="Pending" style="margin-right: 4px;">
+        <span>Pending</span>
+      </label>
+  
+      <label style="display: flex; align-items: center; margin-right: 8px;">
+        <input type="radio" id="notAdmitted" name="admissionStatus[status]" value="Not Admitted" style="margin-right: 4px;">
+        <span>Not Admitted</span>
+      </label>
+    </div>
+  
+    <!-- Right Side: Referred By -->
+    <div style="display: flex; align-items: center; gap: 7px;">
+      <label for="referredBy" style="font-size: 1.1em;">Referred By:</label>
+      <input type="text" id="referredBy" name="referredBy"
+        style="padding: 5px 8px; font-size: 1em; border: 1px solid #ccc; border-radius: 5px; width: 180px;">
+    </div>
+  </div>
+  
+            
+            <button type="submit" class="btn btn-success mt-3">Submit</button>
+        </form>
+    </div>
+    
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="errorModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="successModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        
+        // State Districts Data
+        const stateDistricts = {
+            "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Nellore", "Prakasam", "Srikakulam", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"],
+            "Arunachal Pradesh": ["Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", "Kra Daadi", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Upper Siang", "Lower Siang", "Lower Dibang Valley", "Dibang Valley", "Anjaw", "Lohit", "Namsai", "Changlang", "Tirap", "Longding"],
+            "Assam": ["Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup Metropolitan", "Kamrup", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Dima Hasao", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tinsukia", "Udalguri", "West Karbi Anglong"],
+            "Bihar": ["Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran (Motihari)", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur (Bhabua)", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger (Monghyr)", "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia (Purnea)", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"],
+            "Chhattisgarh": ["Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada (South Bastar)", "Dhamtari", "Durg", "Gariyaband", "Janjgir-Champa", "Jashpur", "Kabirdham (Kawardha)", "Kanker (North Bastar)", "Kondagaon", "Korba", "Korea (Koriya)", "Mahasamund", "Mungeli", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Sukma", "Surajpur  ", "Surguja"],
+            "Goa": ["North Goa", "South Goa"],
+            "Gujarat": ["Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha (Palanpur)", "Bharuch", "Bhavnagar", "Botad", "Chhota Udepur", "Dahod", "Dangs (Ahwa)", "Devbhoomi Dwarka", "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh", "Kachchh", "Kheda (Nadiad)", "Mahisagar", "Mehsana", "Morbi", "Narmada (Rajpipla)", "Navsari", "Panchmahal (Godhra)", "Patan", "Porbandar", "Rajkot", "Sabarkantha (Himmatnagar)", "Surat", "Surendranagar", "Tapi (Vyara)", "Vadodara", "Valsad"],
+            "Haryana": ["Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurugram (Gurgaon)", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"],
+            "Himachal Pradesh": ["Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul &amp; Spiti", "Mandi", "Shimla", "Sirmaur (Sirmour)", "Solan", "Una"],
+            "Jharkhand": ["Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribag", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahibganj", "Seraikela-Kharsawan", "Simdega", "West Singhbhum"],
+            "Karnataka": ["Bagalkote", "Ballari (Bellary)", "Belagavi (Belgaum)", "Bengaluru (Bangalore) Rural", "Bengaluru (Bangalore) Urban", "Bidar", "Chamarajanagar", "Chikballapur", "Chikkamagaluru (Chikmagalur)", "Chitradurga", "Dakshina Kannada", "Davangere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi (Gulbarga)", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru (Mysore)", "Raichur", "Ramanagara", "Shivamogga (Shimoga)", "Tumakuru (Tumkur)", "Udupi", "Uttara Kannada (Karwar)", "Vijayapura (Bijapur)", "Yadgir"],
+            "Kerala": ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"],
+            "Madhya Pradesh": ["Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Hoshangabad", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Mandla", "Mandsaur", "Morena", "Narsinghpur", "Neemuch", "Panna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"],
+            "Maharashtra": ["Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Osmanabad", "Palghar", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"],
+            "Manipur": ["Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"],
+            "Meghalaya": ["East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "North Garo Hills", "Ri Bhoi", "South Garo Hills", "South West Garo Hills ", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"],
+            "Mizoram": ["Aizawl", "Champhai", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saiha", "Serchhip"],
+            "Nagaland": ["Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon", "Peren", "Phek", "Tuensang", "Wokha", "Zunheboto"],
+            "Odisha": ["Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Deogarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghapur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar (Keonjhar)", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Sonepur", "Sundargarh"],
+            "Punjab": ["Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Ferozepur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana", "Mansa", "Moga", "Mohali", "Muktsar", "Nawanshahr (Shahid Bhagat Singh Nagar)", "Pathankot", "Patiala", "Rupnagar", "Sahibzada Ajit Singh Nagar (Mohali)", "Sangrur", "Tarn Taran"],
+            "Rajasthan": ["Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"],
+            "Sikkim": ["East Sikkim", "North Sikkim", "South Sikkim", "West Sikkim"],
+            "Tamil Nadu": ["Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"],
+            "Telangana": ["Adilabad", "Bhadradri Kothagudem", "Hyderabad", "Jagtial", "Jangaon", "Jayashankar Bhoopalpally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam", "Komaram Bheem Asifabad", "Mahabubabad", "Mahabubnagar", "Mancherial", "Medak", "Medchal", "Nagarkurnool", "Nalgonda", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Rangareddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Warangal (Rural)", "Warangal (Urban)", "Yadadri Bhuvanagiri"],
+            "Tripura": ["Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"],
+            "Uttar Pradesh": ["Agra", "Aligarh", "Allahabad", "Ambedkar Nagar", "Amethi (Chatrapati SahujiMaharaj Nagar)", "Amroha (J.P. Nagar)", "Auraiya", "Azamgarh", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Faizabad", "Farrukhabad", "Fatehpur", "Firozabad", "Gautam Buddha Nagar", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur (Panchsheel Nagar)", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kanpur Nagar", "Kanshiram Nagar (Kasganj)", "Kaushambi", "Kushinagar (Padrauna)", "Lakhimpur - Kheri", "Lalitpur", "Lucknow", "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "RaeBareli", "Rampur", "Saharanpur", "Sambhal (Bhim Nagar)", "Sant Kabir Nagar", "Shahjahanpur", "Shamali (Prabuddh Nagar)", "Shravasti", "Siddharth Nagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"],
+            "Uttarakhand": ["Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"],
+            "West Bengal": ["Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur (South Dinajpur)", "Darjeeling", "Hooghly", "Howrah", "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman (West Bardhaman)", "Paschim Medinipur (West Medinipur)", "Purba Bardhaman (East Bardhaman)", "Purba Medinipur (East Medinipur)", "Purulia", "South 24 Parganas", "Uttar Dinajpur (North Dinajpur)"]
+        };
+        function updateDistricts() {
+        const stateSelect = document.getElementById("state");
+        const districtSelect = document.getElementById("district");
+        const selectedState = stateSelect.value;
+        districtSelect.innerHTML = '<option value="">Select District</option>';
+        if (selectedState in stateDistricts) {
+            stateDistricts[selectedState].forEach(district => {
+                let option = document.createElement("option");
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            });
+        }
+    }
+
+function clearErrors() {
+    document.querySelectorAll(".error-message").forEach(errorSpan => {
+        errorSpan.textContent = "";
+    });
+}
+
+function clearMessages() {
+    const messageContainer = document.getElementById("message-container");
+    messageContainer.innerHTML = "";
+}
+
+function displaySuccessMessage(message) {
+    const successModalBody = document.getElementById("successModalBody");
+    successModalBody.innerHTML = message;
+
+    const successModal = new bootstrap.Modal(document.getElementById("successModal"));
+    successModal.show();
+}
+
+function displayErrorMessage(message) {
+    const errorModalBody = document.getElementById("errorModalBody");
+    errorModalBody.innerHTML = message;
+
+    const errorModal = new bootstrap.Modal(document.getElementById("errorModal"));
+    errorModal.show();
+}
+
+function displayErrors(errors) {
+    const errorPopup = document.createElement('div');
+    errorPopup.classList.add('error-popup');
+    errorPopup.innerHTML = errors.join("<br>");
+
+    const messageContainer = document.getElementById("message-container");
+    messageContainer.innerHTML = "";
+    messageContainer.appendChild(errorPopup);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // document.getElementById("studentform").addEventListener("submit", async function (event) {
+    //     event.preventDefault();
+    //     clearErrors();
+    //     clearMessages();
+
+    //     if (!validateMarks()) {
+    //         return;
+    //     }
+
+    //     try {
+    //         const formData = new FormData(document.getElementById("studentform"));
+    //         const address = {
+    //             doorNo: formData.get("doorNo"),
+    //             street: formData.get("street"),
+    //             villageCity: formData.get("villageCity"),
+    //             state: formData.get("state"),
+    //             district: formData.get("district"),
+    //             pinCode: formData.get("pinCode")
+    //         };
+    //         formData.append("address", JSON.stringify(address));
+    //         formData.delete("doorNo");
+    //         formData.delete("street");
+    //         formData.delete("villageCity");
+    //         formData.delete("state");
+    //         formData.delete("district");
+    //         formData.delete("pinCode");
+
+    //         const response = await fetch("https://sce-admission-be.onrender.com/adstudents", {
+    //             method: "POST",
+    //             body: formData,
+    //         });
+
+    //         if (response.ok) {
+    //             displaySuccessMessage("Student details recorded successfully!");
+    //             document.getElementById("studentform").reset();
+
+    //             // Increment application number after successful submission
+    //             // const currentApplicationNo = parseInt(applicationNoField.value, 10);
+    //             // applicationNoField.value = currentApplicationNo + 1;
+    //         } else {
+    //             const errorData = await response.json();
+    //             if (errorData.error === "Validation Failed") {
+    //                 displayErrors(errorData.details);
+    //             } else if (errorData.missingFields) { // Check for missing fields
+    //                 displayMissingFields(errorData.missingFields); // Display missing fields
+    //             } else {
+    //                 displayErrorMessage(errorData.error || "Form submission failed.");
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error("Error:", error);
+    //         displayErrorMessage("An error occurred during form submission.");
+    //     }
+    // });
+
+    document.getElementById("mobileNo").addEventListener("input", function (e) {
+        if (e.target.value.length > 10) {
+            e.target.value = e.target.value.slice(0, 10);
+            document.getElementById("mobileno-error").textContent = "Mobile number should not exceed 10 digits";
+        } else {
+            document.getElementById("mobileno-error").textContent = "";
+        }
+    });
+
+    document.getElementById("fatherMobile").addEventListener("input", function (e) {
+        if (e.target.value.length > 10) {
+            e.target.value = e.target.value.slice(0, 10);
+            document.getElementById("fathermobile-error").textContent = "Mobile number should not exceed 10 digits";
+        } else {
+            document.getElementById("fathermobile-error").textContent = "";
+        }
+    });
+
+    document.getElementById("motherMobile").addEventListener("input", function (e) {
+        if (e.target.value.length > 10) {
+            e.target.value = e.target.value.slice(0, 10);
+            document.getElementById("mothermobile-error").textContent = "Mobile number should not exceed 10 digits";
+        } else {
+            document.getElementById("mothermobile-error").textContent = "";
+        }
+    });
+
+    document.getElementById("aadharNo").addEventListener("input", function (e) {
+        if (e.target.value.length > 12) {
+            e.target.value = e.target.value.slice(0, 12);
+            document.getElementById("aadharno-error").textContent = "Aadhaar number should not exceed 12 digits";
+        } else {
+            document.getElementById("aadharno-error").textContent = "";
+        }
+    });
+
+    ["marks6", "marks7", "marks8", "marks9", "marks10", "marks11", "marks12"].forEach((fieldId) => {
+        document.getElementById(fieldId).addEventListener("input", function (e) {
+            const input = e.target.value.toLowerCase();
+            if (input === "pass" || input === "all pass" || !isNaN(input)) {
+                document.getElementById(fieldId + "-error").textContent = "";
+            } else {
+                document.getElementById(fieldId + "-error").textContent = 'Marks must be a number or "Pass"';
+            }
+        });
+    });
+
+    document.getElementById("selectedGroup").addEventListener("change", populatetwelfthMarksTable);
+
+    if (document.getElementById("selectedGroup").value) {
+        populatetwelfthMarksTable();
+    }
+
+    const marksTableBody = document.querySelector("#twelfthMarksTable tbody");
+    marksTableBody.addEventListener("input", function (event) {
+        const input = event.target;
+        if (input.classList.contains("marks-input")) {
+            calculateCutoff();
+            const addonSpan = document.getElementById(input.id + "-addon");
+            if (addonSpan) {
+                updateMarkFormat(input, 100);
+            } else {
+                console.error("Addon span not found for input:", input.id);
+            }
+        }
+    });
+
+    const admissionStatusOptions = document.querySelectorAll('input[name="admissionStatus"]');
+    admissionStatusOptions.forEach((option) => {
+        option.addEventListener("change", function () {
+            admissionStatusOptions.forEach((otherOption) => {
+                if (otherOption !== this) {
+                    otherOption.checked = false;
+                }
+            });
+        });
+    });
+});
+
+function showAlert(message) {
+    const alertDiv = document.createElement("div");
+    alertDiv.className = "alert alert-danger alert-popup";
+    alertDiv.innerHTML = message;
+    document.body.appendChild(alertDiv);
+    alertDiv.style.position = "fixed";
+    alertDiv.style.top = "50%";
+    alertDiv.style.left = "50%";
+    alertDiv.style.transform = "translate(-50%, -50%)";
+    setTimeout(() => {
+        document.body.removeChild(alertDiv);
+    }, 2000);
+}
+
+const subjectMapping = {
+    "Science with Mathematics (PCM)": ["Tamil", "English", "Physics", "Chemistry", "Mathematics", "Biology"],
+    //"Science with Biology (PCB)": ["Tamil", "English", "Physics", "Chemistry", "Zoology", "Botany"],
+    "Computer Science": ["Tamil", "English", "Physics", "Chemistry", "Mathematics", "Computer Science"],
+    "Vocational": ["Tamil", "English", "Mathematics", "Vocational Theory", "Vocational-P1","Vocational-P2"]
+};
+
+function populatetwelfthMarksTable() {
+    const selectedGroup = document.getElementById("selectedGroup").value;
+    const table = document.getElementById("twelfthMarksTable");
+
+    if (table) {
+        const marksTableBody = table.querySelector("tbody");
+        if (marksTableBody) {
+            marksTableBody.innerHTML = "";
+            if (selectedGroup && subjectMapping[selectedGroup]) {
+                subjectMapping[selectedGroup].forEach((subject, index) => {
+                    const row = marksTableBody.insertRow();
+                    const cell1 = row.insertCell(0);
+                    const cell2 = row.insertCell(1);
+                    const cell3 = row.insertCell(2);
+                    const cell4 = row.insertCell(3);
+
+                    cell1.textContent = index + 1;
+                    cell2.textContent = subject;
+
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.classList.add("form-control", "marks-input", "text-center");
+                    input.id = subject.toLowerCase().replace(/\s+/g, '') + "Marks";
+                    input.name = subject.toLowerCase().replace(/\s+/g, '') + "Marks";
+                    input.dataset.subject = subject;
+                    cell3.appendChild(input);
+
+                    const span = document.createElement("span");
+                    span.classList.add("marks-addon");
+                    span.id = input.id + "-addon";
+                    span.textContent = "/ 100";
+                    cell3.style.position = "relative";
+                    cell3.appendChild(span);
+
+                    requestAnimationFrame(() => {
+                        updateMarkFormat(input, 100);
+                    });
+
+                    const yearInput = document.createElement("input");
+                    yearInput.type = "text";
+                    yearInput.classList.add("form-control", "year-input", "text-center");
+                    yearInput.id = subject.toLowerCase().replace(/\s+/g, '') + "Year";
+                    cell4.appendChild(yearInput);
+                });
+                addMarksInputListeners();
+                autoFillPassingYear(); // Call the auto-fill function after creating the table
+            }
+        } else {
+            console.error("Table body not found!");
+        }
+    } else {
+        console.error("Table not found!");
+    }
+}
+
+function autoFillPassingYear() {
+    const yearInputs = document.querySelectorAll("#twelfthMarksTable tbody .year-input");
+
+    if (yearInputs.length > 0) {
+        const firstYearInput = yearInputs[0];
+
+        firstYearInput.addEventListener("blur", function () {
+            const passingYear = parseInt(firstYearInput.value);
+
+            if (!isNaN(passingYear)) {
+                yearInputs.forEach(input => {
+                    input.value = passingYear;
+                });
+            }
+        });
+    }
+}
+
+            function addMarksInputListeners() {
+            const marksInputs = document.querySelectorAll(".marks-input");
+            marksInputs.forEach(input => {
+            input.addEventListener("input", function () {
+            calculateCutoff();
+            updateMarkFormat(this, 100);
+            });
+            });
+            }
+
+            function updateMarkFormat(input, maxMarks) {
+            const addonSpan = document.getElementById(input.id + "-addon");
+
+            if (addonSpan) {
+            if (input.value.toLowerCase() === "pass" || input.value.toLowerCase() === "all pass") {
+            addonSpan.style.display = "none";
+            input.value = "Pass";
+            } else if (!isNaN(input.value) && parseInt(input.value) > maxMarks) {
+            input.value = "";
+            showAlert("Marks cannot be greater than " + maxMarks);
+            } else {
+            addonSpan.style.display = "block";
+            }
+            } else {
+            console.error("Addon span not found for input:", input.id);
+            }
+            }
+
+            function calculateCutoff() {
+            const selectedGroup = document.getElementById("selectedGroup").value;
+            const marksInputs = document.querySelectorAll(".marks-input");
+            let cutoff = 0;
+            let subjectMarks = {};
+            marksInputs.forEach(input => {
+            const subject = input.dataset.subject;
+            const marks = parseFloat(input.value);
+            if (!isNaN(marks)) {
+            subjectMarks[subject] = marks;
+            }
+            });
+
+            switch (selectedGroup) {
+            case "Science with Mathematics (PCM)":
+            cutoff = (subjectMarks["Chemistry"] + subjectMarks["Physics"]) / 2 + (subjectMarks["Mathematics"]);
+            break;
+
+            
+
+            case "Computer Science":
+            cutoff = (subjectMarks["Chemistry"] + subjectMarks["Physics"]) / 2 + (subjectMarks["Mathematics"]);
+            break;
+
+            case "Vocational":
+            cutoff =subjectMarks["Mathematics"] + ((subjectMarks["Vocational-P1"] + subjectMarks["Vocational-P2"]) / 2 + subjectMarks["Vocational Theory"] )/ 2;
+            break;
+
+            default:
+            cutoff = 0;
+            }
+
+            document.getElementById("cutoff").value = isNaN(cutoff) ? "" : cutoff.toFixed(2);
+            }
+            function validateMarks() {
+            let errors =[];
+            const selectedGroup = document.getElementById("selectedGroup").value;
+            const subjects = subjectMapping[selectedGroup] ||[];
+
+            subjects.forEach(subject => {
+            const marksInputId = subject.toLowerCase() + "Marks";
+            const marksInput = document.getElementById(marksInputId);
+
+            if (marksInput) {
+            const marksValue = marksInput.value.trim().toLowerCase();
+            if (isNaN(marksValue) && marksValue !== "pass" && marksValue !== "all pass") {
+            errors.push(`Valid ${subject} Marks are required.`);
+            }
+            }
+            });
+
+            if (errors.length > 0) {
+            displayErrors(errors);
+            return false;
+            }
+            return true;
+            }
+
+            function getUrlParameter(name) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+
+            function displayMissingFields(missingFields) {
+            const list = document.getElementById('missingFieldsList');
+            const ul = document.createElement('ul');
+            missingFields.forEach(field => {
+            const li = document.createElement('li');
+            li.textContent = field;
+            ul.appendChild(li);
+            });
+            list.appendChild(ul);
+
+            // Show the modal
+            const missingFieldsModal = new bootstrap.Modal(document.getElementById("missingFieldsModal"));
+            missingFieldsModal.show();
+            }
+
+            const missingFieldsParam = getUrlParameter('missingFields');
+            if (missingFieldsParam) {
+            const missingFields = JSON.parse(decodeURIComponent(missingFieldsParam));
+            displayMissingFields(missingFields);
+            }
+            // Function to update allocated fee when reduced fee is entered
+            function updateAllocatedFee(inputElement) {
+                const row = inputElement.closest('tr');
+                const allocatedFeeInput = row.querySelector('.allocated-fee');
+                const reducedFee = parseFloat(inputElement.value) || 0;
+                
+                // Store the original fee if not already stored
+                if (!allocatedFeeInput.dataset.originalFee) {
+                    allocatedFeeInput.dataset.originalFee = allocatedFeeInput.value;
+                }
+                
+                // Calculate new allocated fee (original - reduced)
+                const originalFee = parseFloat(allocatedFeeInput.dataset.originalFee) || 0;
+                const newAllocatedFee = originalFee - reducedFee;
+                
+                // Update the allocated fee field
+                allocatedFeeInput.value = newAllocatedFee.toFixed(2);
+                
+                // Update the total fee
+                updateTotalFee();
+            }
+            
+            // Function to update the total fee (only tuition and hostel)
+            function updateTotalFee() {
+                let total = 0;
+                
+                // Only sum tuition and hostel fees (skip admission)
+                const tuitionFee = parseFloat(document.getElementById("tuitionFee").value) || 0;
+                const hostelFee = parseFloat(document.getElementById("hostelFee").value) || 0;
+                
+                total = tuitionFee + hostelFee;
+                document.getElementById('totalFee').value = total.toFixed(2);
+            }
+            
+            // Modified updateFees function to preserve concession amounts
+            function updateFees() {
+    try {
+        console.log("Checkkkk4566....", tuitionFee);
+        
+        // Get all elements first with null checks
+        const getElement = (id) => {
+            const el = document.getElementById(id);
+            if (!el) {
+                console.error(`Element with ID '${id}' not found`);
+                return null;
+            }
+            return el;
+        };
+
+        const departmentEl = getElement("department");
+        const communityEl = getElement("community");
+        const modeOfAdmissionEl = getElement("modeOfAdmission");
+        const firstGraduateEl = getElement("first");
+        const hostelStatusEl = getElement("hostel");
+        const referredByEl = getElement("referedby");
+        const tuitionFeeEl = getElement("tuitionFee");
+        const hostelFeeEl = getElement("hostelFee");
+        const totalFeeEl = getElement("totalFee");
+        const hostelRowEl = getElement("hostel-row");
+
+        // If any critical elements are missing, return early
+        if (!departmentEl || !tuitionFeeEl || !hostelFeeEl || !totalFeeEl || !hostelRowEl) {
+            console.error("Required elements are missing");
+            return;
+        }
+
+        let department = departmentEl.value || "";
+        let community = communityEl ? communityEl.value || "" : "";
+        let modeOfAdmission = modeOfAdmissionEl ? modeOfAdmissionEl.value || "" : "";
+        let firstGraduate = firstGraduateEl ? firstGraduateEl.value || "" : "";
+        let hostelStatus = hostelStatusEl ? hostelStatusEl.value || "" : "";
+        let referredBy = referredByEl ? referredByEl.value || "" : "";
+
+        console.log("Checkkkk....", tuitionFee);
+        
+        if (!department) {
+            tuitionFeeEl.value = "";
+            hostelFeeEl.value = "";
+            totalFeeEl.value = "";
+            hostelRowEl.style.display = "none";
+            return;
+        }
+
+        let apiUrl = `https://sce-admission-be.onrender.com/student/fees?branch=${encodeURIComponent(department)}&community=${encodeURIComponent(community)}&modeOfAdmission=${encodeURIComponent(modeOfAdmission)}&firstGraduate=${encodeURIComponent(firstGraduate)}&needHostel=${hostelStatus === "Hosteller"}`;
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(fees => {
+                let tuitionFee = fees.tuition || 0;
+                let hostelFee = fees.hostel || 0;
+                
+                // Store original fees (excluding admission)
+                tuitionFeeEl.dataset.originalFee = tuitionFee;
+                hostelFeeEl.dataset.originalFee = hostelFee;
+                
+                console.log("Checkkkk....", tuitionFee);
+                // Apply any existing concessions
+                const tuitionReducedEl = getElement("tuitionReducedFee");
+                const hostelReducedEl = getElement("hostelReducedFee");
+                
+                const tuitionReduced = tuitionReducedEl ? parseFloat(tuitionReducedEl.value) || 0 : 0;
+                const hostelReduced = hostelReducedEl ? parseFloat(hostelReducedEl.value) || 0 : 0;
+                
+                tuitionFeeEl.value = tuitionFee - tuitionReduced;
+                hostelFeeEl.value = hostelFee - hostelReduced;
+                
+                hostelRowEl.style.display = hostelStatus === "Hosteller" ? "table-row" : "none";
+                updateTotalFee();
+            })
+            .catch(error => {
+                console.error("Error fetching fees:", error);
+                alert("Error fetching fee details. Please try again or contact the administrator.");
+                tuitionFeeEl.value = "";
+                hostelFeeEl.value = "";
+                totalFeeEl.value = "";
+                hostelRowEl.style.display = "none";
+            });
+
+    } catch (e) {
+        console.error("Error in updateFees:", e);
+        alert("An unexpected error occurred. Please check the console.");
+    }
+}
+            
+            // Initialize concession toggle
+            document.addEventListener('DOMContentLoaded', function() {
+                const concessionButton = document.getElementById('concessionButton');
+                const concessionHeaders = document.querySelectorAll('.concession-header');
+                const concessionCells = document.querySelectorAll('.concession-cell');
+                let concessionVisible = false;
+            
+                if (concessionButton && concessionHeaders.length > 0 && concessionCells.length > 0) {
+                    concessionButton.addEventListener('click', function() {
+                        concessionVisible = !concessionVisible;
+                        concessionHeaders.forEach(header => {
+                            header.style.display = concessionVisible ? '' : 'none';
+                        });
+                        concessionCells.forEach(cell => {
+                            cell.style.display = concessionVisible ? '' : 'none';
+                        });
+                        concessionButton.textContent = concessionVisible ? 'Hide Concession Fields' : 'Apply Concession';
+                    });
+            
+                    // Function to collect concession data before form submission
+                    window.getConcessionData = function() {
+                        const concessionData = [];
+                        const rows = document.querySelectorAll('#feesDetailsTable tbody tr');
+                        rows.forEach(row => {
+                            const reducedFeeInput = row.querySelector('.concession-reduced-fee');
+                            const reasonInput = row.querySelector('.concession-reason');
+                            if (reducedFeeInput && reasonInput) {
+                                concessionData.push({
+                                    feeType: row.cells[0].innerText,
+                                    reducedFee: concessionVisible ? reducedFeeInput.value : '',
+                                    reason: concessionVisible ? reasonInput.value : ''
+                                });
+                            }
+                        });
+                        return concessionData;
+                    };
+                } else {
+                    console.error("Error: Concession elements not found in the DOM.");
+                }
+            });
+            
+            // Set up event listeners
+            document.getElementById("department").addEventListener("change", updateFees);
+            document.getElementById("hostel").addEventListener("change", updateFees);
+            document.getElementById("community").addEventListener("change", updateFees);
+            document.getElementById("modeOfAdmission").addEventListener("change", updateFees);
+            document.getElementById("first").addEventListener("change", updateFees);
+    // Example of how you might use getConcessionData before submitting the form:
+    function submitStudentForm() {
+        const formData = new FormData(document.getElementById('studentForm')); // Assuming your form has the ID 'studentForm'
+        const concessionInfo = window.getConcessionData();
+        formData.append('concessionInfo', JSON.stringify(concessionInfo));
+        // ... rest of your form submission logic using formData or fetch ...
+        console.log("Concession Data:", concessionInfo); // For testing
+    }
+document.getElementById('concessionButton').addEventListener('click', function() {
+    const concessions = [];
+    const feeRows = document.querySelectorAll('#feesDetailsTable tbody tr');
+
+    feeRows.forEach(row => {
+        const feeTypeCell = row.querySelector('td:first-child');
+        const reducedFeeInput = row.querySelector('.concession-reduced-fee');
+        const reasonInput = row.querySelector('.concession-reason');
+
+        if (feeTypeCell && reducedFeeInput && reasonInput) {
+            const feeType = feeTypeCell.textContent.trim();
+            const reducedFee = reducedFeeInput.value;
+            const reason = reasonInput.value;
+
+            // ADD THE FOLLOWING IF CONDITION TO ONLY INCLUDE CONCESSIONS WITH DATA
+            if (reducedFee || reason) {
+                concessions.push({ feeType: feeType, reducedFee: reducedFee, reason: reason });
+            }
+        }
+    });
+
+    document.getElementById('concessionInfoInput').value = JSON.stringify(concessions);
+    console.log("Concession Info JSON:", JSON.stringify(concessions)); // For debugging
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const applicationNoField = document.getElementById("applicationNo");
+
+    // Fetch the next application number from the backend
+    async function fetchNextApplicationNo() {
+        try {
+            const response = await fetch("https://sce-admission-be.onrender.com/nextApplicationNo"); // Replace with your backend API endpoint
+            if (response.ok) {
+                const data = await response.json();
+                applicationNoField.value = data.nextApplicationNo; // Default to 250001 if no value is returned
+            } else {
+                console.error("Failed to fetch the next application number. Defaulting to 25001.");
+                applicationNoField.value = 25001;
+            }
+        } catch (error) {
+            console.error("Error fetching the next application number:", error);
+            applicationNoField.value = 250001; // Default to 250001 in case of an error
+        }
+        applicationNoField.readOnly = true; // Make the field read-only
+    }
+
+    fetchNextApplicationNo();
+
+    document.getElementById("studentform").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        clearErrors();
+        clearMessages();
+
+        try {
+            const formData = new FormData(document.getElementById("studentform"));
+            const address = {
+                doorNo: formData.get("doorNo"),
+                street: formData.get("street"),
+                villageCity: formData.get("villageCity"),
+                state: formData.get("state"),
+                district: formData.get("district"),
+                pinCode: formData.get("pinCode")
+            };
+            formData.append("address", JSON.stringify(address));
+            const response = await fetch("https://sce-admission-be.onrender.com/adstudents", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                displaySuccessMessage("Student details recorded successfully!");
+                document.getElementById("studentform").reset();
+                setTimeout(() => {
+                    window.location.href = "admin.html";
+                        }, 2000);
+                // Fetch the next application number after successful submission
+                fetchNextApplicationNo();
+            } else {
+                const errorData = await response.json();
+                displayErrorMessage(errorData.error || "Form submission failed.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            displayErrorMessage("An error occurred during form submission.");
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const regularSelect = document.getElementById("regular");
+    const batchSelect = document.getElementById("batch");
+
+    function updateBatch() {
+        const currentYear = new Date().getFullYear();
+        const selection = regularSelect.value.trim(); // Get selected value
+        
+        console.log("updateBatch called. regularSelect.value:", selection);
+
+        let batchValue = ""; // Default empty value
+
+        if (selection === "Regular") {
+            batchValue = `${currentYear}-${currentYear + 4}`;
+        } else if (selection === "Lateral") {
+            batchValue = `${currentYear}-${currentYear + 3}`;
+        }
+
+        console.log("Setting batchSelect value to:", batchValue);
+
+        if (batchValue) {
+            let optionExists = false;
+
+            // Check if the batch value exists in the dropdown options
+            for (let option of batchSelect.options) {
+                if (option.value === batchValue) {
+                    optionExists = true;
+                    batchSelect.value = batchValue;
+                    break;
+                }
+            }
+
+            // If batchValue is not in options, add a new option and select it
+            if (!optionExists) {
+                let newOption = new Option(batchValue, batchValue);
+                batchSelect.add(newOption);
+                batchSelect.value = batchValue;
+            }
+        } else {
+            batchSelect.value = ""; // Reset if no selection
+        }
+
+        console.log("batchSelect.value after updateBatch:", batchSelect.value);
+    }
+
+    // Attach event listener for changes
+    regularSelect.addEventListener("change", updateBatch);
+
+    // Initialize batch if a value is already selected
+    if (["Regular", "Lateral"].includes(regularSelect.value.trim())) {
+        updateBatch();
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // School inputs function (your existing code)
+    const schoolInputs = [
+        document.getElementById("school6"),
+        document.getElementById("school7"),
+        document.getElementById("school8"),
+        document.getElementById("school9"),
+        document.getElementById("school10"),
+        document.getElementById("school11"),
+        document.getElementById("school12"),
+    ];
+
+    // Block inputs
+    const blockInputs = [
+        document.getElementById("block6"),
+        document.getElementById("block7"),
+        document.getElementById("block8"),
+        document.getElementById("block9"),
+        document.getElementById("block10"),
+        document.getElementById("block11"),
+        document.getElementById("block12"),
+    ];
+
+    // District inputs
+    const districtInputs = [
+        document.getElementById("studiedDistrict6"),
+        document.getElementById("studiedDistrict7"),
+        document.getElementById("studiedDistrict8"),
+        document.getElementById("studiedDistrict9"),
+        document.getElementById("studiedDistrict10"),
+        document.getElementById("studiedDistrict11"),
+        document.getElementById("studiedDistrict12"),
+    ];
+
+    // Generic function to update placeholders for any input type
+    function updatePlaceholders(baseInput, inputArray) {
+        const value = baseInput.value;
+        const baseIndex = inputArray.indexOf(baseInput);
+
+        if (value) {
+            for (let i = baseIndex + 1; i < inputArray.length; i++) {
+                if (!inputArray[i].value) {  // Only update if field is empty
+                    inputArray[i].placeholder = value;
+                }
+            }
+        } else {
+            for (let i = baseIndex + 1; i < inputArray.length; i++) {
+                if (inputArray[i].placeholder && !inputArray[i].value) {
+                    inputArray[i].placeholder = "";
+                }
+            }
+        }
+    }
+
+    // Generic function for focus behavior
+    function handleFocus(input) {
+        if (input.placeholder && !input.value) {
+            input.value = input.placeholder;
+            input.placeholder = "";
+        }
+    }
+
+    // Setup event listeners for all input types
+    function setupInputBehavior(inputs) {
+        inputs.forEach(input => {
+            if (input) {
+                input.addEventListener("blur", function() {
+                    updatePlaceholders(input, inputs);
+                });
+
+                input.addEventListener("focus", function() {
+                    handleFocus(input);
+                });
+            }
+        });
+    }
+
+    // Initialize all input types
+    setupInputBehavior(schoolInputs);
+    setupInputBehavior(blockInputs);
+    setupInputBehavior(districtInputs);
+
+    // Optional: Clear all placeholders when form is reset
+    const form = document.querySelector("form");
+    if (form) {
+        form.addEventListener("reset", function() {
+            [schoolInputs, blockInputs, districtInputs].forEach(inputArray => {
+                inputArray.forEach(input => {
+                    if (input) input.placeholder = "";
+                });
+            });
+        });
+    }
+});
+function populatePassingYears() {
+    const yearIds = ['year6', 'year7', 'year8', 'year9', 'year10', 'year11', 'year12'];
+    const yearInputs = yearIds.map(id => document.getElementById(id)).filter(input => input !== null);
+
+    if (yearInputs.length > 0) {
+        yearInputs.forEach((input, index) => {
+            input.addEventListener("blur", function () {
+                const passingYear = parseInt(input.value);
+
+                if (!isNaN(passingYear)) {
+                    // Fill from the current input down to year12
+                    for (let i = index; i < yearInputs.length; i++) {
+                        yearInputs[i].value = passingYear + (i - index);
+                    }
+                } else {
+                    // Clear values from this index onward if input is invalid
+                    for (let i = index; i < yearInputs.length; i++) {
+                        yearInputs[i].value = "";
+                    }
+                }
+            });
+        });
+    } else {
+        console.error("Year inputs for classes VI–XII not found!");
+    }
+}
+
+window.addEventListener('DOMContentLoaded', populatePassingYears);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const communitySelect = document.getElementById("community");
+    const firstGraduateInput = document.getElementById("first");
+    const firstGraduateField = firstGraduateInput.closest(".col-md-4.bold-text");
+    const firstGraduateCertificate = document.getElementById("firstCertificate");
+
+    // Show/hide based on community
+    function updateFirstGraduateVisibility() {
+        if (communitySelect.value === "ST" || communitySelect.value === "SC") {
+            firstGraduateField.style.display = "none";
+            firstGraduateCertificate.style.display = "none";
+        } else {
+            firstGraduateField.style.display = "block";
+            updateCertificateRow(); // Check dropdown value and show/hide row
+        }
+    }
+
+    // Show/hide certificate row based on first graduate selection
+    function updateCertificateRow() {
+        if (firstGraduateInput.value === "Yes") {
+            firstGraduateCertificate.style.display = "table-row";
+        } else {
+            firstGraduateCertificate.style.display = "none";
+        }
+    }
+
+    // Initial call on page load
+    updateFirstGraduateVisibility();
+
+    // Event listeners
+    communitySelect.addEventListener("change", updateFirstGraduateVisibility);
+    firstGraduateInput.addEventListener("change", updateCertificateRow);
+});
+
+//fees calculation
+document.addEventListener("DOMContentLoaded", function () {
+    // Function to calculate pending fees
+    function calculatePendingFees() {
+        const rows = document.querySelectorAll("#feesDetailsTable tbody tr");
+        rows.forEach(row => {
+            const allocatedFeeInput = row.querySelector('input[name$="Fee"]');
+            const paidInput = row.querySelector('input[name$="PaidStatus"]');
+            const pendingInput = row.querySelector('input[name$="Pending"]');
+
+            if (allocatedFeeInput && paidInput && pendingInput) {
+                const allocatedFee = parseFloat(allocatedFeeInput.value) || 0;
+                const paid = parseFloat(paidInput.value) || 0;
+                const pending = allocatedFee - paid;
+
+                pendingInput.value = pending >= 0 ? pending.toFixed(2) : "0.00";
+            }
+        });
+    }
+
+    // Add event listeners to update pending fees when paid input changes
+    const paidInputs = document.querySelectorAll('input[name$="PaidStatus"]');
+    paidInputs.forEach(input => {
+        input.addEventListener("input", calculatePendingFees);
+    });
+
+    // Initial calculation on page load
+    calculatePendingFees();
+});
+function goBackToDashboard() {
+    // Redirect back to admin dashboard
+    window.location.href = "admin.html";
+  }
+
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</body>
+</html>

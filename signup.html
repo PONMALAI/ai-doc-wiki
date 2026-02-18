@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="../public/signup.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        .error,
+        .success {
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            background: #ffdddd;
+        }
+
+        .success {
+            color: green;
+            background: #ddffdd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="register-container">
+            <!-- Error / Success Message -->
+            <div id="message"></div>
+
+            <form id="signupForm">
+                <h1>Signup</h1>
+
+                <label for="fullname">Full Name:</label>
+                <div class="input-container">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="fullname" id="fullname" placeholder="Enter your full name" required>
+                </div>
+
+                <label for="email">Email:</label>
+                <div class="input-container">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <label for="username">Username:</label>
+                <div class="input-container">
+                    <i class="fas fa-user-circle"></i>
+                    <input type="text" name="username" id="username" placeholder="Enter username" required>
+                </div>
+
+                <label for="password">Password:</label>
+                <div class="input-container">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" id="password"
+                        placeholder="Enter Strong Password (at least 8 characters)" required>
+                    <i class="fas fa-eye-slash toggle-password" onclick="togglePassword()"></i>
+                </div>
+
+                <button type="submit">Signup</button>
+
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </form>
+        </div>
+
+        <div class="image-container">
+            <img src="../public/images/student.jpg" alt="Register Background">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevent page reload
+
+            const fullname = document.getElementById("fullname").value;
+            const email = document.getElementById("email").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const messageDiv = document.getElementById("message");
+
+            try {
+                const baseUrl = "https://sce-admission-be.onrender.com"; // Correctly define base URL
+                const response = await fetch(`${baseUrl}/signup`, {  // Use baseUrl in API call
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ fullname, email, username, password })
+                });
+
+                const data = await response.json();
+                console.log('data', data)
+
+                if (response.ok) {
+                    messageDiv.innerHTML = `<div class="success">${data.message}</div>`;
+                    document.getElementById("signupForm").reset(); // Clear the form
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 2000);
+                } else {
+                    messageDiv.innerHTML = `<div class="error">${data.error || "Signup failed"}</div>`;
+                }
+            } catch (error) {
+                messageDiv.innerHTML = `<div class="error">Error: Unable to connect to server</div>`;
+            }
+
+            // Auto-hide message after 5 seconds
+            setTimeout(() => {
+                messageDiv.innerHTML = ""; // Clears message after 5 seconds
+            }, 5000);
+        });
+
+        // Toggle Password Visibility
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const eyeIcon = document.querySelector(".toggle-password");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            }
+        }
+    </script>
+        <script src="./js/main.js"></script>
+</body>
+
+</html>
